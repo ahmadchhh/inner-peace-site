@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyWebsite</title>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        :root {
+            --primary-color: #c6c3c3;
+            --second-color: #ffffff;
+            --black-color: #000000;
+        }
+
+        body {
+            background-image: url("https://codingstella.com/wp-content/uploads/2024/01/download-6-scaled.jpeg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--second-color);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login_box {
+            position: relative;
+            width: 450px;
+            backdrop-filter: blur(25px);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 7.5em 2.5em 4em 2.5em;
+            color: var(--second-color);
+            box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .login-header {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            width: 140px;
+            height: 70px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .login-header span {
+            font-size: 30px;
+            color:aliceblue;
+        }
+
+        .login-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -30px;
+            width: 30px;
+            height: 30px;
+            border-top-right-radius: 50%;
+            background: transparent;
+            box-shadow: 15px 0 0 0 var(--primary-color);
+        }
+
+        .login-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -30px;
+            width: 30px;
+            height: 30px;
+            border-top-left-radius: 50%;
+            background: transparent;
+            box-shadow: -15px 0 0 0 var(--primary-color);
+        }
+
+        .input_box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            height: 55px;
+            font-size: 16px;
+            background: transparent;
+            color: var(--second-color);
+            padding-inline: 20px 50px;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            outline: none;
+        }
+
+        #user {
+            margin-bottom: 10px;
+        }
+
+        .label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            transition: 0.2s;
+        }
+
+        .input-field:focus ~ .label,
+        .input-field:valid ~ .label {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 14px;
+            background-color: var(--primary-color);
+            border-radius: 30px;
+            color: var(--black-color);
+            padding: 0 10px;
+        }
+
+        .icon {
+            position: absolute;
+            top: 18px;
+            right: 25px;
+            font-size: 20px;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+            margin: 15px 0;
+        }
+
+        .input-submit {
+            width: 100%;
+            height: 50px;
+            background: #ececec;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .input-submit:hover {
+            background: var(--second-color);
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register a {
+            font-weight: 500;
+        }
+
+        /* Messages styling */
+        .messages {
+            margin: 20px 0;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .alert-error {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ffcccc;
+            border-left: 4px solid #ff3333;
+        }
+
+        .alert-success {
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #ccffcc;
+            border-left: 4px solid #33ff33;
+        }
+
+        .alert-info {
+            background-color: rgba(0, 150, 255, 0.2);
+            color: #cce7ff;
+            border-left: 4px solid #3399ff;
+        }
+
+        .home-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .home-link a {
+            color: var(--primary-color);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-link a:hover {
+            color: var(--second-color);
+        }
+
+        /* Bubble background */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: yellow;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        /* Bigger Neon Streak Cursor */
+        .neon-streak {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #fffc00, #ff4500);
+            box-shadow: 0 0 12px #ff00ff, 0 0 24px #00ffff, 0 0 36px #fffc00;
+            opacity: 0.9;
+        }
+
+        @media only screen and (max-width: 564px) {
+            .wrapper {
+                padding: 20px;
+            }
+
+            .login_box {
+                padding: 7.5em 1.5em 4em 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <form method="POST" class="login_box">
+            {% csrf_token %}
+            
+            <div class="login-header">
+                <span>Login</span>
+            </div>
+
+            <!-- Messages Display -->
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="input_box">
+                <input type="text" id="user" name="username" class="input-field" required>
+                <label for="user" class="label">Username</label>
+                <i class="bx bx-user icon"></i>
+            </div>
+
+            <div class="input_box">
+                <input type="password" id="pass" name="password" class="input-field" required>
+                <label for="pass" class="label">Password</label>
+                <i class="bx bx-lock-alt icon"></i>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <div class="forgot">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+
+            <div class="input_box">
+                <input type="submit" class="input-submit" value="Login">
+            </div>
+
+            <div class="register">
+                <span>Don't have an account? <a href="{% url 'register' %}">Register</a></span>
+            </div>
+
+            <div class="home-link">
+                <a href="{% url 'homepage' %}">
+                    <i class='bx bx-home'></i> Back to Homepage
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // ---------------- Floating Labels Functionality ----------------
+        document.querySelectorAll('.input-field').forEach(input => {
+            // Check if input has value on page load
+            if (input.value) {
+                input.nextElementSibling.style.top = '-10px';
+                input.nextElementSibling.style.fontSize = '14px';
+                input.nextElementSibling.style.backgroundColor = 'var(--primary-color)';
+                input.nextElementSibling.style.borderRadius = '30px';
+                input.nextElementSibling.style.color = 'var(--black-color)';
+                input.nextElementSibling.style.padding = '0 10px';
+            }
+            
+            // Add focus/blur events
+            input.addEventListener('focus', function() {
+                this.nextElementSibling.style.top = '-10px';
+                this.nextElementSibling.style.fontSize = '14px';
+                this.nextElementSibling.style.backgroundColor = 'var(--primary-color)';
+                this.nextElementSibling.style.borderRadius = '30px';
+                this.nextElementSibling.style.color = 'var(--black-color)';
+                this.nextElementSibling.style.padding = '0 10px';
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.nextElementSibling.style.top = '15px';
+                    this.nextElementSibling.style.fontSize = '16px';
+                    this.nextElementSibling.style.backgroundColor = 'transparent';
+                    this.nextElementSibling.style.color = 'var(--second-color)';
+                    this.nextElementSibling.style.padding = '0';
+                }
+            });
+        });
+
+        // ---------------- Auto-hide Messages ----------------
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const messages = document.querySelectorAll('.alert');
+                messages.forEach(function(message) {
+                    message.style.opacity = '0';
+                    message.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        message.style.display = 'none';
+                    }, 500);
+                });
+            }, 5000);
+        });
+
+        // ---------------- Bigger Neon Streak Cursor ----------------
+        const streakCount = 12; // number of trail segments
+        const streaks = [];
+
+        for (let i = 0; i < streakCount; i++) {
+            const s = document.createElement('div');
+            s.classList.add('neon-streak');
+            s.style.opacity = (streakCount - i) / streakCount;
+            const size = 12 - i*0.6;  // bigger start size
+            s.style.width = size + 'px';
+            s.style.height = size + 'px';
+            document.body.appendChild(s);
+            streaks.push({el: s, x: 0, y: 0});
+        }
+
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateStreak() {
+            let x = mouseX, y = mouseY;
+            streaks.forEach((s, index) => {
+                s.x += (x - s.x) * 0.25;
+                s.y += (y - s.y) * 0.25;
+                s.el.style.transform = `translate(${s.x}px, ${s.y}px)`;
+                x = s.x;
+                y = s.y;
+            });
+            requestAnimationFrame(animateStreak);
+        }
+        animateStreak();
+
+        // ---------------- Floating Bubbles Background ----------------
+        const bubbleCount = 40; // number of bubbles
+        const bubbles = [];
+
+        for(let i=0;i<bubbleCount;i++){
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = 10 + Math.random()*40;
+            bubble.style.width = size+'px';
+            bubble.style.height = size+'px';
+            bubble.style.left = Math.random()*window.innerWidth + 'px';
+            bubble.style.top = Math.random()*window.innerHeight + 'px';
+            bubble.speed = 0.2 + Math.random()*1; // movement speed
+            document.body.appendChild(bubble);
+            bubbles.push(bubble);
+        }
+
+        function animateBubbles(){
+            bubbles.forEach(b => {
+                let top = parseFloat(b.style.top);
+                top -= b.speed;
+                if(top < -50) top = window.innerHeight + 50; // reset to bottom
+                b.style.top = top + 'px';
+            });
+            requestAnimationFrame(animateBubbles);
+        }
+        animateBubbles();
+    </script>
+</body>
+</html>
